@@ -30,34 +30,79 @@ public class Game
     }
 
     /**
+     * The main function.
+     * Will allow the game to run outside of BlueJ.
+     */
+    public static void main(String[] args)
+    {
+        Game game = new Game();
+        game.play();
+    }
+
+    /**
      * Create all the rooms and link their exits together.
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room library, clubroom, roof, office, closet,
+        kitchen, foodCourt, lounge, campusCenter, classroom,
+        lab, quad, outside, walkway, parkingLot;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
+        library         = new Room("inside the university's library");
+        clubroom        = new Room("inside the clubroom in the Campus Center");
+        roof            = new Room("on the roof of the main building");
+        office          = new Room("inside the main office for the CS department");
+        closet          = new Room("inside a shared closet for the lab and office rooms");
+        kitchen         = new Room("inside the food court's kitchen");
+        foodCourt       = new Room("at the main food court");
+        lounge          = new Room("inside the student lounge");
+        campusCenter    = new Room("inside the university's Campus Center");
+        classroom       = new Room("in a lecture room");
+        lab             = new Room("in a computing lab");
+        quad            = new Room("on the main quad at the university");
+        outside         = new Room("outside the main entrance of the university");
+        walkway         = new Room("on a walkway between the entrance and parking lot");
+        parkingLot      = new Room("at the parking lot for the university");
+
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
 
-        theater.setExit("west", outside);
+        library.setExit("south", foodCourt);
+        clubroom.setExit("south", lounge);
+        clubroom.setExit("east", roof);
+        roof.setExit("west", clubroom);
+        roof.setExit("southwest", campusCenter);
+        roof.setExit("southeast", classroom);
+        office.setExit("south", lab);
+        office.setExit("east", closet);
+        closet.setExit("northwest", office);
+        closet.setExit("southwest", lab);
+        kitchen.setExit("east", foodCourt);
+        foodCourt.setExit("west", kitchen);
+        foodCourt.setExit("north", library);
+        foodCourt.setExit("east", lounge);
+        lounge.setExit("west", foodCourt);
+        lounge.setExit("north", clubroom);
+        lounge.setExit("east", campusCenter);
+        campusCenter.setExit("west", lounge);
+        campusCenter.setExit("north", roof);
+        campusCenter.setExit("east", classroom);
+        campusCenter.setExit("south", outside);
+        classroom.setExit("west", campusCenter);
+        classroom.setExit("north", roof);
+        classroom.setExit("east", lab);
+        lab.setExit("west", classroom);
+        lab.setExit("north", office);
+        lab.setExit("east", closet);
+        quad.setExit("east", outside);
+        outside.setExit("west", quad);
+        outside.setExit("east", walkway);
+        walkway.setExit("west", outside);
+        walkway.setExit("east", parkingLot);
+        parkingLot.setExit("west", walkway);
 
-        pub.setExit("east", outside);
-
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        currentRoom = outside;  // start game outside
+        // start game in the parking lot
+        currentRoom = parkingLot;
     }
 
     /**
