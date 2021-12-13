@@ -11,8 +11,8 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author Spencer Gunning
+ * @version 2021.12.13
  */
 
 public class Game 
@@ -133,7 +133,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        look();
     }
 
     /**
@@ -154,6 +154,10 @@ public class Game
 
             case HELP:
                 printHelp();
+                break;
+
+            case LOOK:
+                look();
                 break;
 
             case GO:
@@ -184,6 +188,14 @@ public class Game
     }
 
     /** 
+     * Look around the room the player character is currently in.
+     */
+    private void look() 
+    {
+        System.out.println(currentRoom.getLongDescription());
+    }
+
+    /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
@@ -205,7 +217,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            look();
         }
     }
 
