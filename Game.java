@@ -164,6 +164,10 @@ public class Game
                 goRoom(command);
                 break;
 
+            case EAT:
+                eat();
+                break;
+
             case QUIT:
                 wantToQuit = quit(command);
                 break;
@@ -180,10 +184,8 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:");
+        System.out.println("You are lost. You are alone. You wander " +
+        "around at the university.\n\n" + "Your command words are:");
         parser.showCommands();
     }
 
@@ -220,6 +222,16 @@ public class Game
             look();
         }
     }
+
+    /** 
+     * An eat command that generates a simple text response.
+     */
+    private void eat() 
+    {
+        System.out.println("You took a bite of some sort of protein bar you " + 
+        "had left in your pocket a while ago. Nutritious...not very tasty, though...");
+    }
+
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
