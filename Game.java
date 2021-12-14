@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room lastRoom;
         
     /**
      * Create the game and initialise its internal map.
@@ -96,6 +97,7 @@ public class Game
         lab.setExit("east", closet);
         quad.setExit("east", outside);
         outside.setExit("west", quad);
+        outside.setExit("north", campusCenter);
         outside.setExit("east", walkway);
         walkway.setExit("west", outside);
         walkway.setExit("east", parkingLot);
@@ -103,6 +105,8 @@ public class Game
 
         // start game in the parking lot
         currentRoom = parkingLot;
+        // last visited location
+        lastRoom = null;
     }
 
     /**
@@ -164,6 +168,10 @@ public class Game
                 goRoom(command);
                 break;
 
+            case BACK:
+                back();
+                break;
+
             case EAT:
                 eat();
                 break;
@@ -218,7 +226,25 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            lastRoom = currentRoom;
             currentRoom = nextRoom;
+            look();
+        }
+    }
+
+    /** 
+     * Go back into the room that the player was previously in.
+     * If the player is at the start, or moved back one room already,
+     * print an error message.
+     */
+    private void back() 
+    {
+        // attempt to go back
+        if (lastRoom == null) {
+            System.out.println("Cannot go back now!");
+        } else {
+            currentRoom = lastRoom;
+            lastRoom = null;
             look();
         }
     }
