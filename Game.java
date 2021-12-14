@@ -121,6 +121,10 @@ public class Game
 
         // start the timer at 15 turns
         timer = 15;
+
+        // adds teleporter
+        lab.addItem("teleportation device", 830);
+        lab.setExit("teleport", quad);
     }
 
     /**
