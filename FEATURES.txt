@@ -1,0 +1,9 @@
+B tasks:
+- A back command, to back out of rooms
+- Add items into rooms, which have description and weight values
+- Give rooms ability to hold more than one item
+
+A tasks:
+- Add a one-way teleporter
+- Add a time limit to the game
+- Add three NPCs with clues to guide the player
