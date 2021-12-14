@@ -1,7 +1,7 @@
 B tasks:
 - A back command, to back out of rooms
+- Add a backMany command, to back out of a number of rooms
 - Add items into rooms, which have description and weight values
-- Give rooms ability to hold more than one item
 
 A tasks:
 - Add a one-way teleporter
