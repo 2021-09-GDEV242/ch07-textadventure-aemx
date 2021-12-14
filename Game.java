@@ -68,8 +68,7 @@ public class Game
         walkway         = new Room("on a walkway between the entrance and parking lot");
         parkingLot      = new Room("at the parking lot for the university");
 
-        // initialise room exits
-
+        // initialize room exits
         library.setExit("south", foodCourt);
         clubroom.setExit("south", lounge);
         clubroom.setExit("east", roof);
@@ -105,8 +104,17 @@ public class Game
         walkway.setExit("east", parkingLot);
         parkingLot.setExit("west", walkway);
 
+        // add items to rooms
+        library.addItem("large book about astrophysics", 3);
+        office.addItem("coffee mug", 1);
+        closet.addItem("musty-smelling string mop bucket", 16);
+        kitchen.addItem("plate that has just been washed", 1);
+        lounge.addItem("state-of-the-art gaming laptop", 6);
+        quad.addItem("deflated soccer ball", 1);
+
         // start game in the parking lot
         currentRoom = parkingLot;
+
         // initalize the stack
         history = new Stack<Room>();
     }
