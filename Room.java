@@ -69,7 +69,7 @@ public class Room
     public String getLongDescription()
     {
         String specialString = item != null ? " There is an item here!\n" + item.getAbout() + "\n" : "\n" ;
-        specialString = npc != null ? " There is someone here!\nThey are a " + npc.getDesc() + ".\n" : "\n" ;
+        specialString = npc != null ? " There is someone here!\nIt is a " + npc.getDesc() + ".\n" : "\n" ;
         return "You are " + description + "." + specialString + getExitString();
     }
 
