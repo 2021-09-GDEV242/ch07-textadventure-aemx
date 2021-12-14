@@ -22,7 +22,9 @@ public class Room
     // stores exits of this room
     private HashMap<String, Room> exits;
     // store an item
-    private Item item; 
+    private Item item;
+    // store a NPC
+    private NPC npc;
 
     /**
      * Create a room described "description". Initially, it has
@@ -35,6 +37,7 @@ public class Room
         this.description = description;
         exits = new HashMap<>();
         item = null;
+        npc = null;
     }
 
     /**
@@ -58,14 +61,16 @@ public class Room
 
     /**
      * Return a description of the room in the form:
-     *     You are in the kitchen.
+     *     You are in the kitchen. [There is <someone/an item> here!]
      *     Exits: north west
+     *     [Special string content]
      * @return A long description of this room
      */
     public String getLongDescription()
     {
-        String itemString = item != null ? " There is an item here!\n" + item.getAbout() + "\n" : "\n" ;
-        return "You are " + description + "." + itemString + getExitString();
+        String specialString = item != null ? " There is an item here!\n" + item.getAbout() + "\n" : "\n" ;
+        specialString = npc != null ? " There is someone here!\nThey are a " + npc.getDesc() + ".\n" : "\n" ;
+        return "You are " + description + "." + specialString + getExitString();
     }
 
     /**
@@ -101,5 +106,22 @@ public class Room
      */
     public void addItem(String itemDesc, int itemWeight) {
         item = new Item(itemDesc, itemWeight);
+    }
+
+    /**
+     * Adds an NPC to the room.
+     * @param npcDesc A short description of the NPC.
+     * @param npcClue The clue given by the NPC.
+     */
+    public void addNPC(String npcDesc, String npcClue) {
+        npc = new NPC(npcDesc, npcClue);
+    }
+
+    /**
+     * Returns NPC data for a given room.
+     * @return NPC data for a given room.
+     */
+    public NPC getNPC() {
+        return npc;
     }
 }

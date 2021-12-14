@@ -113,6 +113,14 @@ public class Game
         lounge.addItem("state-of-the-art gaming laptop", 6);
         quad.addItem("deflated soccer ball", 1);
 
+        // add NPCs to rooms
+        walkway.addNPC("tall lanky man in his early 20s",
+        "Hey man, have you seen my car keys? I could have sworn I left them somewhere around the lecture halls here...");
+        roof.addNPC("shadowy, cloaked figure",
+        "...if you take to the East, you will be sure to find something special...");
+        classroom.addNPC("young lady, an adjunct professor",
+        "Oh, hello there! Did you see our latest installation in the Lab room?!");
+
         // start game in the parking lot
         currentRoom = parkingLot;
 
@@ -196,6 +204,10 @@ public class Game
 
             case EAT:
                 eat();
+                break;
+
+            case TALK:
+                talk();
                 break;
 
             case QUIT:
@@ -324,6 +336,22 @@ public class Game
     {
         System.out.println("You took a bite of some sort of protein bar you " + 
         "had left in your pocket a while ago. Nutritious...not very tasty, though...");
+    }
+
+    /** 
+     * Talk to an NPC in the room, if there is one.
+     * Otherwise, print an error message.
+     */
+    private void talk() 
+    {
+        NPC npc = currentRoom.getNPC();
+        // try to talk to the npc
+        if (npc != null) {
+            System.out.println("You approach the " + npc.getDesc() + ".\n\"" +
+            npc.getClue() + "\"");
+        } else {
+            System.out.println("But there was no one to talk to...");
+        }
     }
 
     /** 
