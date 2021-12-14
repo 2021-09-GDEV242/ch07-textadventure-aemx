@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,7 +21,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room lastRoom;
+    private Stack<Room> history;
         
     /**
      * Create the game and initialise its internal map.
@@ -105,8 +107,8 @@ public class Game
 
         // start game in the parking lot
         currentRoom = parkingLot;
-        // last visited location
-        lastRoom = null;
+        // initalize the stack
+        history = new Stack<Room>();
     }
 
     /**
@@ -172,6 +174,10 @@ public class Game
                 back();
                 break;
 
+            case BACKMANY:
+                backMany(command);
+                break;
+
             case EAT:
                 eat();
                 break;
@@ -226,7 +232,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            lastRoom = currentRoom;
+            history.push(currentRoom);
             currentRoom = nextRoom;
             look();
         }
@@ -240,12 +246,52 @@ public class Game
     private void back() 
     {
         // attempt to go back
-        if (lastRoom == null) {
+        if (history.size() == 0) {
             System.out.println("Cannot go back now!");
         } else {
-            currentRoom = lastRoom;
-            lastRoom = null;
+            currentRoom = history.pop();
             look();
+        }
+    }
+
+    /** 
+     * Go back through a number of rooms specified by the player.
+     * If there aren't enough rooms to go back through, print an error message.
+     * @param command The number of rooms to go back through.
+     */
+    private void backMany(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there's no command, just run back instead
+            back();
+        } else {
+            try {
+                // attempt to convert the command string to an int
+                int num = Integer.parseInt(command.getSecondWord());
+                // if it works, try to go back the specified number of rooms
+                // eventually check length, and if everything works alright,
+                // pop the stack num times
+                if (num == 0) {
+                    // can't go back zero rooms
+                    System.out.println("Cannot go back 0 rooms!");
+                } else if (num < 0) {
+                    // can't go back a negative amount of rooms
+                    System.out.println("Cannot go back a negative amount of rooms!");
+                } else if (num > history.size()) {
+                    // can't go back more rooms than there is recorded history
+                    System.out.println("Cannot go back that many rooms!");
+                } else {
+                    // good to go. pop the stack num times
+                    for (int i = 0; i < num; i++) {
+                        currentRoom = history.pop();
+                    }
+                    look();
+                }
+            } catch (NumberFormatException e) {
+                // if the command string isn't convertable to an int,
+                // print an error message
+                System.out.println("That's not a number!");
+            }
         }
     }
 
@@ -257,7 +303,6 @@ public class Game
         System.out.println("You took a bite of some sort of protein bar you " + 
         "had left in your pocket a while ago. Nutritious...not very tasty, though...");
     }
-
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
