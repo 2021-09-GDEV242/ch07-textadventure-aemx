@@ -22,6 +22,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> history;
+    private int timer;
         
     /**
      * Create the game and initialise its internal map.
@@ -117,6 +118,9 @@ public class Game
 
         // initalize the stack
         history = new Stack<Room>();
+
+        // start the timer at 15 turns
+        timer = 15;
     }
 
     /**
@@ -217,6 +221,9 @@ public class Game
     private void look() 
     {
         System.out.println(currentRoom.getLongDescription());
+        if (timer % 5 == 0 || timer < 5) {
+            System.out.println("There are " + timer + " turn(s) left in the game.");
+        }
     }
 
     /** 
@@ -242,6 +249,7 @@ public class Game
         else {
             history.push(currentRoom);
             currentRoom = nextRoom;
+            checkTimer();
             look();
         }
     }
@@ -258,6 +266,7 @@ public class Game
             System.out.println("Cannot go back now!");
         } else {
             currentRoom = history.pop();
+            checkTimer();
             look();
         }
     }
@@ -292,6 +301,7 @@ public class Game
                     // good to go. pop the stack num times
                     for (int i = 0; i < num; i++) {
                         currentRoom = history.pop();
+                        checkTimer();
                     }
                     look();
                 }
@@ -311,6 +321,21 @@ public class Game
         System.out.println("You took a bite of some sort of protein bar you " + 
         "had left in your pocket a while ago. Nutritious...not very tasty, though...");
     }
+
+    /** 
+     * Checks the current time left in the game.
+     * If there are still turns left, decrement the timer,
+     * otherwise ,quit out of the game.
+     */
+    private void checkTimer() {
+        if (timer > 1) {
+            timer--;
+        } else {
+            System.out.println("Time's up...! See you next time.");
+            System.exit(0);
+        }
+    }
+
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
